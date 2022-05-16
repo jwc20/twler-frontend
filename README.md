@@ -1,6 +1,20 @@
 # DEVELOPMENT BRANCH
 
-## Twler
+# Twler
+
+## Wireframes
+
+![login page](./public/wireframes/login.png)
+![results page](./public/wireframes/results.png)
+![athletes page](./public/wireframes/athletes.png)
+
+### As a user, I can:
+
+- Signup
+- Log into and out from the site
+- Bookmark a competition result
+- See a list of all results
+- see a list of all athletes
 
 ### `npm start`
 
