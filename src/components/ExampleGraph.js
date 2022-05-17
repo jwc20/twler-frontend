@@ -7,47 +7,42 @@ function ExampleGraph() {
   const svgRef = useRef();
 
   useEffect(() => {
-    console.log(data)
-    const w = 11400;
-    const h = 600;
+
+    const margin = { top: 10, right: 40, bottom: 30, left: 30 },
+      width = 450 - margin.left - margin.right,
+      height = 400 - margin.top - margin.bottom;
+
     const svg = d3
-      .select(svgRef.current)
-      .attr("width", w)
-      .attr("height", h)
-      .style("background", "#d3d3d3")
-      .style("margin-top", "50")
-      .style("margin-left", "50")
-      .style("overflow", "visible");
+      .select("#area")
+      .append("svg")
+      .attr("width", width + margin.left + margin.right)
+      .attr("height", height + margin.top + margin.bottom)
+      .append("g")
+      .attr("transform", `translate(${margin.left}, ${margin.top})`);
 
-    const xScale = d3
-      .scaleLinear()
-      .domain([0, data.length - 1])
-      .range([0, w]);
-    const yScale = d3.scaleLinear().domain([0, h]).range([h, 0]);
-    const generateScaledLine = d3
-      .line()
-      .x((d, i) => xScale(i))
-      .y(yScale)
-      .curve(d3.curveCardinal);
+    const x = d3.scaleLinear().domain([0, 190]).range([0, width]);
+    svg
+      .append("g")
+      .attr("transform", `translate(0, ${height})`)
+      .call(d3.axisBottom(x));
 
-    const xAxis = d3
-      .axisBottom(xScale)
-      .ticks(data.length)
-      .tickFormat((i) => i + 1);
-    const yAxis = d3.axisLeft(yScale).ticks(5);
-    svg.append("g").call(xAxis).attr("transform", `translate(0, ${h})`);
-    svg.append("g").call(yAxis);
+    const y = d3.scaleLinear().domain([0, 460]).range([height, 0]);
+    svg.append("g").call(d3.axisLeft(y));
 
-
-
-
-
-
+    svg
+      .selectAll("whatever")
+      .data(data)
+      .enter()
+      .append("circle")
+      .attr("cx", (d) => x(d.bweight))
+      .attr("cy", (d) => y(d.total))
+      .attr("r", 1.5);
   }, [data]);
 
   return (
     <div>
       <svg ref={svgRef}></svg>
+      <svg id="area" height={400} width={500}></svg>
     </div>
   );
 }
