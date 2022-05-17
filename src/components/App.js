@@ -1,18 +1,12 @@
 import "./App.css";
-import NavBar from './NavBar';
-import Routes from './Routes';
-import ExampleGraph from './ExampleGraph';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 function App() {
-
-
   return (
     <div className="App">
-
-      <NavBar />
-      <Routes />
-      <ExampleGraph />
-      <h1 className="text-5xl font-bold underline italic">Hello world!</h1>
+      <header className="App-header">
+        <h1 className="text-3xl font-bold underline italic">Hello world!</h1>
+      </header>
     </div>
   );
 }

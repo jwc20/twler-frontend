@@ -2,13 +2,6 @@
   text-align: center;
 }
 
-.graph { 
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  display: inline;
-}
-
 .App-logo {
   height: 40vmin;
   pointer-events: none;
