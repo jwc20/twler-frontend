@@ -2,6 +2,11 @@
 
 # Twler
 
+## Tools
+- d3.js
+- tailwindcss
+- styled-components (?)
+
 ## Wireframes
 
 ![login page](./public/wireframes/login.png)
