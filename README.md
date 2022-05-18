@@ -4,7 +4,8 @@
 
 ## Tools
 - d3.js
-- tailwindcss
+- tailwind css
+- headless ui
 
 
 ## Wireframes

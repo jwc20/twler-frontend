@@ -1,71 +1,60 @@
 import { Link } from "react-router-dom";
+import { Fragment } from "react";
+import { Popover, Transition } from "@headlessui/react";
 
 function Nav() {
   return (
-    <nav className="bg-[#1d1e26] border-gray-200 px-2 sm:px-4 py-2.5 rounded drac-dark-grey">
-      <div className="container flex flex-wrap justify-between items-center mx-auto">
-        <a href="https://flowbite.com" className="flex items-center">
-          {/**********************************************
-          <img
-            src="/docs/images/logo.svg"
-            className="mr-3 h-6 sm:h-9"
-            alt="Flowbite Logo"
-          />
-          ************************************************/}
-          <span className="self-center text-xl font-semibold whitespace-nowrap dark:text-white">
-            Twler
-          </span>
-        </a>
-        <div className="hidden w-full md:block md:w-auto">
-          <ul className="flex flex-col mt-4 md:flex-row md:space-x-8 md:mt-0 md:text-sm md:font-medium">
-            <li>
-              <Link
-                to="/"
-                className="block py-2 pr-4 pl-3 text-white bg-blue-700 rounded md:bg-transparent md:text-blue-700 md:p-0 dark:text-white"
-              >
-                Home
-              </Link>
-            </li>
+    <Popover className="relative bg-white">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6">
+        <div className="flex justify-between items-center border-b-2 border-gray-100 py-6 md:justify-start md:space-x-10">
+          <Popover.Group as="nav" className="hidden md:flex space-x-10">
+            <Link
+              to="/"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Home
+            </Link>
 
-            <li>
-              <Link
-                to="/results"
-                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Results
-              </Link>
-            </li>
+            <Link
+              to="/results"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Results
+            </Link>
 
-            <li>
-              <Link
-                to="/athletes"
-                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Athletes
-              </Link>
-            </li>
+            <Link
+              to="/athletes"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Athletes
+            </Link>
 
-            <li>
-              <Link
-                to="/login"
-                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Login
-              </Link>
-            </li>
+            <Link
+              to="/login"
+              className="text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Login
+            </Link>
+          </Popover.Group>
 
-            <li>
-              <Link
-                to="/signup"
-                className="block py-2 pr-4 pl-3 text-gray-700 border-b border-gray-100 hover:bg-gray-50 md:hover:bg-transparent md:border-0 md:hover:text-blue-700 md:p-0 dark:text-gray-400 md:dark:hover:text-white dark:hover:bg-gray-700 dark:hover:text-white md:dark:hover:bg-transparent dark:border-gray-700"
-              >
-                Signup
-              </Link>
-            </li>
-          </ul>
+          <div className="hidden md:flex items-center justify-end md:flex-1 lg:w-0">
+            <Link
+              to="login"
+              className="whitespace-nowrap text-base font-medium text-gray-500 hover:text-gray-900"
+            >
+              Sign in
+            </Link>
+
+            <Link
+              to="signup"
+              className="ml-8 whitespace-nowrap inline-flex items-center justify-center px-4 py-2 border border-transparent rounded-md shadow-sm text-base font-medium text-white bg-indigo-600 hover:bg-indigo-700"
+            >
+              Sign up
+            </Link>
+          </div>
         </div>
       </div>
-    </nav>
+    </Popover>
   );
 }
 
