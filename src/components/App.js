@@ -9,6 +9,7 @@ import Signup from "../pages/Signup";
 import EventsPage from "../pages/EventsPage";
 
 function App() {
+
   return (
     <div>
       <Nav />
