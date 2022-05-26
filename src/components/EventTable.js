@@ -9,13 +9,11 @@ function EventTable({ columns, events }) {
   // Render
   //
 
-  /*
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({
       columns,
-      events,
+      data: events,
     });
-  */
 
   /*
   const [years, setYears] = useState([]);
@@ -30,14 +28,6 @@ function EventTable({ columns, events }) {
 
   return (
     <div>
-      <ul>
-        {events.map((event) => (
-          <li key={event.id}>{event.name}</li>
-        ))}
-      </ul>
-
-      {/*
-
       <table {...getTableProps()} border="1">
         <thead>
           {headerGroups.map((headerGroup) => (
@@ -63,9 +53,6 @@ function EventTable({ columns, events }) {
           })}
         </tbody>
       </table>
-
-
-      */}
     </div>
   );
 }

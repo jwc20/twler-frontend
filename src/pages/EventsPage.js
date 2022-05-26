@@ -12,7 +12,12 @@ function EventsPage() {
     fetch(url + `/events/years/2021`)
       .then((r) => r.json())
       .then((events) => {
-        setEvents(events);
+        // setEvents(events);
+        // FIXME: temporary solution
+        setEvents(events.filter((value) => Object.keys(value).length !== 0));
+      })
+      .catch((error) => {
+        console.log("error");
       });
   }, []);
 
@@ -23,16 +28,12 @@ function EventsPage() {
         accessor: "name",
       },
       {
-        Header: "Title",
-        accessor: "title",
+        Header: "Location",
+        accessor: "location",
       },
       {
-        Header: "Status",
-        accessor: "status",
-      },
-      {
-        Header: "Role",
-        accessor: "role",
+        Header: "date",
+        accessor: "date",
       },
     ],
     []
