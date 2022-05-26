@@ -1,5 +1,5 @@
 import { useMemo } from "react";
-import EventTable from "../components/EventTable";
+import EventTable, {SelectColumnFilter} from "../components/EventTable";
 import { useState, useEffect } from "react";
 
 const url = "http://127.0.0.1:3000";
@@ -30,10 +30,19 @@ function EventsPage() {
       {
         Header: "Location",
         accessor: "location",
+        Filter: SelectColumnFilter, // new
+        filter: "includes", // new
       },
       {
-        Header: "date",
+        Header: "Date",
         accessor: "date",
+      },
+      // TODO
+      {
+        Header: "",
+        accessor: "year",
+        Filter: SelectColumnFilter, // new
+        filter: "includes", // new
       },
     ],
     []

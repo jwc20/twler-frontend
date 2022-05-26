@@ -1,7 +1,43 @@
-import { useState, useEffect } from "react";
-import { useTable, useGlobalFilter, useAsyncDebounce } from "react-table"; // new
+import { useState, useEffect, useMemo } from "react";
+import {
+  useTable,
+  useGlobalFilter,
+  useAsyncDebounce,
+  useFilters,
+  useSortBy,
+} from "react-table"; // new
 
 const url = "http://127.0.0.1:3000";
+
+export function SelectColumnFilter({
+  column: { filterValue, setFilter, preFilteredRows, id },
+}) {
+  const options = useMemo(() => {
+    const options = new Set();
+    preFilteredRows.forEach((row) => {
+      options.add(row.values[id]);
+    });
+    return [...options.values()];
+  }, [id, preFilteredRows]);
+
+  return (
+    <select
+      name={id}
+      id={id}
+      value={filterValue}
+      onChange={(e) => {
+        setFilter(e.target.value || undefined);
+      }}
+    >
+      <option value="">All</option>
+      {options.map((option, i) => (
+        <option key={i} value={option}>
+          {option}
+        </option>
+      ))}
+    </select>
+  );
+}
 
 function GlobalFilter({
   preGlobalFilteredRows,
@@ -30,14 +66,6 @@ function GlobalFilter({
 }
 
 function EventTable({ columns, events }) {
-  /*
-  const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
-    useTable({
-      columns,
-      data: events,
-    });
-  */
-
   const {
     getTableProps,
     getTableBodyProps,
@@ -52,7 +80,9 @@ function EventTable({ columns, events }) {
       columns,
       data: events,
     },
-    useGlobalFilter // new
+    useGlobalFilter, // new
+    useFilters,
+    useSortBy
   );
 
   return (
@@ -62,12 +92,29 @@ function EventTable({ columns, events }) {
         globalFilter={state.globalFilter}
         setGlobalFilter={setGlobalFilter}
       />
-      <table {...getTableProps()} border="1">
+
+      {headerGroups.map((headerGroup) =>
+        headerGroup.headers.map((column) =>
+          column.Filter ? (
+            <div key={column.id}>
+              <label for={column.id}>{column.render("Header")}: </label>
+              {column.render("Filter")}
+            </div>
+          ) : null
+        )
+      )}
+
+      <table {...getTableProps()} border="1" className="table-auto">
         <thead>
           {headerGroups.map((headerGroup) => (
             <tr {...headerGroup.getHeaderGroupProps()}>
               {headerGroup.headers.map((column) => (
-                <th {...column.getHeaderProps()}>{column.render("Header")}</th>
+                <th {...column.getHeaderProps(column.getSortByToggleProps())}>
+                  {column.render("Header")}
+                  <span>
+                    {column.isSorted ? (column.isSortedDesc ? " ▼" : " ▲") : ""}
+                  </span>
+                </th>
               ))}
             </tr>
           ))}
@@ -87,6 +134,11 @@ function EventTable({ columns, events }) {
           })}
         </tbody>
       </table>
+      <div>
+        <pre>
+          <code>{JSON.stringify(state, null, 2)}</code>
+        </pre>
+      </div>
     </div>
   );
 }
