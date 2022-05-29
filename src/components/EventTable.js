@@ -167,7 +167,10 @@ function EventTable({ columns, events }) {
                   {page.map((row, i) => {
                     prepareRow(row);
                     return (
-                      <tr {...row.getRowProps()}>
+                      <tr
+                        className="odd:bg-white even:bg-slate-100 hover:bg-slate-200 active:bg-slate-300 focus:outline-none focus:ring"
+                        {...row.getRowProps()}
+                      >
                         {row.cells.map((cell) => {
                           return (
                             // TODO ONCLICK
