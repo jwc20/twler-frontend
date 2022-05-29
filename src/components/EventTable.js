@@ -126,6 +126,7 @@ function EventTable({ columns, events }) {
               <tr {...row.getRowProps()}>
                 {row.cells.map((cell) => {
                   return (
+                    // TODO ONCLICK
                     <td {...cell.getCellProps()}>{cell.render("Cell")}</td>
                   );
                 })}
