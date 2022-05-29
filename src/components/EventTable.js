@@ -18,7 +18,7 @@ import { Button, PageButton } from "./PaginationButton";
 const url = "http://127.0.0.1:3000";
 
 export function SelectColumnFilter({
-  column: { filterValue, setFilter, preFilteredRows, id },
+  column: { filterValue, setFilter, preFilteredRows, id, render },
 }) {
   const options = useMemo(() => {
     const options = new Set();
@@ -29,21 +29,25 @@ export function SelectColumnFilter({
   }, [id, preFilteredRows]);
 
   return (
-    <select
-      name={id}
-      id={id}
-      value={filterValue}
-      onChange={(e) => {
-        setFilter(e.target.value || undefined);
-      }}
-    >
-      <option value="">All</option>
-      {options.map((option, i) => (
-        <option key={i} value={option}>
-          {option}
-        </option>
-      ))}
-    </select>
+    <label className="flex gap-x-2 items-baseline">
+      <span className="text-gray-700">{render("Header")}: </span>
+      <select
+        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+        name={id}
+        id={id}
+        value={filterValue}
+        onChange={(e) => {
+          setFilter(e.target.value || undefined);
+        }}
+      >
+        <option value="">All</option>
+        {options.map((option, i) => (
+          <option key={i} value={option}>
+            {option}
+          </option>
+        ))}
+      </select>
+    </label>
   );
 }
 
@@ -59,17 +63,19 @@ function GlobalFilter({
   }, 200);
 
   return (
-    <span>
-      Search:{" "}
+    <label className="flex gap-x-2 items-baseline">
+      <span className="text-gray-700">Search: </span>
       <input
+        type="text"
+        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
         value={value || ""}
         onChange={(e) => {
           setValue(e.target.value);
           onChange(e.target.value);
         }}
-        placeholder={`${count} records...`}
+        placeholder={`${count} events...`}
       />
-    </span>
+    </label>
   );
 }
 
@@ -105,22 +111,21 @@ function EventTable({ columns, events }) {
 
   return (
     <div>
-      <GlobalFilter
-        preGlobalFilteredRows={preGlobalFilteredRows}
-        globalFilter={state.globalFilter}
-        setGlobalFilter={setGlobalFilter}
-      />
+      <div className="flex gap-x-2">
+        <GlobalFilter
+          preGlobalFilteredRows={preGlobalFilteredRows}
+          globalFilter={state.globalFilter}
+          setGlobalFilter={setGlobalFilter}
+        />
 
-      {headerGroups.map((headerGroup) =>
-        headerGroup.headers.map((column) =>
-          column.Filter ? (
-            <div key={column.id}>
-              <label for={column.id}>{column.render("Header")}: </label>
-              {column.render("Filter")}
-            </div>
-          ) : null
-        )
-      )}
+        {headerGroups.map((headerGroup) =>
+          headerGroup.headers.map((column) =>
+            column.Filter ? (
+              <div key={column.id}>{column.render("Filter")}</div>
+            ) : null
+          )
+        )}
+      </div>
 
       <div className="mt-2 flex flex-col">
         <div className="-my-2 overflow-x-auto -mx-4 sm:-mx-6 lg:-mx-8">
@@ -192,24 +197,29 @@ function EventTable({ columns, events }) {
             Next
           </Button>
         </div>
-        <div className="hidden sm:flex-1 sm:flex sm:items-center sm:justify-between">
-          <div className="flex gap-x-2">
+        <div className="hidden sm:flex-1  sm:flex sm:items-center sm:justify-between">
+          <div className="flex gap-x-2 sm:items-center">
             <span className="text-sm text-gray-700">
               Page <span className="font-medium">{state.pageIndex + 1}</span> of{" "}
               <span className="font-medium">{pageOptions.length}</span>
             </span>
-            <select
-              value={state.pageSize}
-              onChange={(e) => {
-                setPageSize(Number(e.target.value));
-              }}
-            >
-              {[5, 10, 20].map((pageSize) => (
-                <option key={pageSize} value={pageSize}>
-                  Show {pageSize}
-                </option>
-              ))}
-            </select>
+
+            <label>
+              <span className="sr-only">Items Per Page</span>
+              <select
+                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                value={state.pageSize}
+                onChange={(e) => {
+                  setPageSize(Number(e.target.value));
+                }}
+              >
+                {[5, 10, 20].map((pageSize) => (
+                  <option key={pageSize} value={pageSize}>
+                    Show {pageSize}
+                  </option>
+                ))}
+              </select>
+            </label>
           </div>
           <div>
             <nav

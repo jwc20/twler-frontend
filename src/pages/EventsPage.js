@@ -65,9 +65,7 @@ function EventsPage() {
     <div className="min-h-screen bg-gray-100 text-gray-900">
       <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
         <div className="">
-          <h1 className="text-xl font-semibold">
-            Events
-          </h1>
+          <h1 className="text-xl font-semibold">Events</h1>
         </div>
 
         <Suspense fallback={<div>Loading...</div>}>
@@ -75,18 +73,25 @@ function EventsPage() {
             <div>Loading..</div>
           ) : (
             <div>
-              <select
-                name="year"
-                id="year"
-                aria-label="year"
-                onChange={handleChange}
-              >
-                {years.map((year, i) => (
-                  <option key={i} value={year}>
-                    {year}
-                  </option>
-                ))}
-              </select>
+              <div className="flex gap-x-2 flex-1  flex items-center">
+                <span className="text-gray-700 items-center font-extrabold">
+                  Year:
+                </span>
+                <select
+                  name="year"
+                  className="mt-1 block rounded-md border-gray-300 shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                  id="year"
+                  aria-label="year"
+                  onChange={handleChange}
+                >
+                  {years.map((year, i) => (
+                    <option key={i} value={year}>
+                      {year}
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div className="mt-4">
                 <EventTable columns={columns} events={events} />
               </div>
