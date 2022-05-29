@@ -134,11 +134,11 @@ function EventTable({ columns, events }) {
           })}
         </tbody>
       </table>
-      <div>
+      {/* <div>
         <pre>
           <code>{JSON.stringify(state, null, 2)}</code>
         </pre>
-      </div>
+      </div> */}
     </div>
   );
 }
