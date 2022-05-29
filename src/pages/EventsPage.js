@@ -62,29 +62,38 @@ function EventsPage() {
   }
 
   return (
-    <div className="flex justify-center">
-      <Suspense fallback={<div>Loading...</div>}>
-        {!events.length ? (
-          <div>Loading..</div>
-        ) : (
-          <div>
-            <select
-              name="year"
-              id="year"
-              aria-label="year"
-              onChange={handleChange}
-            >
-              {years.map((year, i) => (
-                <option key={i} value={year}>
-                  {year}
-                </option>
-              ))}
-            </select>
+    <div className="min-h-screen bg-gray-100 text-gray-900">
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 pt-4">
+        <div className="">
+          <h1 className="text-xl font-semibold">
+            Events
+          </h1>
+        </div>
 
-            <EventTable columns={columns} events={events} />
-          </div>
-        )}
-      </Suspense>
+        <Suspense fallback={<div>Loading...</div>}>
+          {!events.length ? (
+            <div>Loading..</div>
+          ) : (
+            <div>
+              <select
+                name="year"
+                id="year"
+                aria-label="year"
+                onChange={handleChange}
+              >
+                {years.map((year, i) => (
+                  <option key={i} value={year}>
+                    {year}
+                  </option>
+                ))}
+              </select>
+              <div className="mt-4">
+                <EventTable columns={columns} events={events} />
+              </div>
+            </div>
+          )}
+        </Suspense>
+      </main>
     </div>
   );
 }
