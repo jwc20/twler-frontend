@@ -5,8 +5,37 @@ import { useState, useEffect } from "react";
 const url = "http://127.0.0.1:3000";
 
 function EventsPage() {
+  const currentYear = new Date().getFullYear();
+  // Temporary solution
+  const placeholderYears = [
+    "2022",
+    "2021",
+    "2020",
+    "2019",
+    "2018",
+    "2017",
+    "2016",
+    "2015",
+    "2014",
+    "2013",
+    "2012",
+    "2011",
+    "2010",
+    "2009",
+    "2008",
+    "2007",
+    "2006",
+    "2005",
+    "2004",
+    "2003",
+    "2002",
+    "2001",
+    "2000",
+    "1999",
+    "1998",
+  ];
   const [events, setEvents] = useState([]);
-  const [years, setYears] = useState([]);
+  const [years, setYears] = useState(placeholderYears);
 
   useEffect(() => {
     async function getYears() {
@@ -19,7 +48,7 @@ function EventsPage() {
 
   useEffect(() => {
     async function getInitialYear() {
-      const response = await fetch(url + `/events/years/2022`)
+      const response = await fetch(url + `/events/years/${currentYear}`)
         .then((r) => r.json())
         .then((events) => {
           setEvents(events.filter((value) => Object.keys(value).length !== 0));
