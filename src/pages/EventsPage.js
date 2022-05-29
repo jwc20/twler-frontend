@@ -9,23 +9,26 @@ function EventsPage() {
   const [years, setYears] = useState([]);
 
   useEffect(() => {
-    fetch(url + "/years")
-      .then((r) => r.json())
-      .then((years) => setYears(years));
+    async function getYears() {
+      const response = await fetch(url + "/years")
+        .then((r) => r.json())
+        .then((years) => setYears(years));
+    }
+    getYears();
   }, []);
 
   useEffect(() => {
-    // fetch(url + `/events/years/${year}`)
-    fetch(url + `/events/years/2022`)
-      .then((r) => r.json())
-      .then((events) => {
-        // setEvents(events);
-        // FIXME: temporary solution
-        setEvents(events.filter((value) => Object.keys(value).length !== 0));
-      })
-      .catch((error) => {
-        console.log("error");
-      });
+    async function getInitialYear() {
+      const response = await fetch(url + `/events/years/2022`)
+        .then((r) => r.json())
+        .then((events) => {
+          setEvents(events.filter((value) => Object.keys(value).length !== 0));
+        })
+        .catch((error) => {
+          console.log("error");
+        });
+    }
+    getInitialYear();
   }, []);
 
   const columns = useMemo(
@@ -48,12 +51,10 @@ function EventsPage() {
     []
   );
 
-  function handleChange(e) {
-    fetch(url + `/events/years/${e.target.value}`)
+  async function handleChange(e) {
+    const response = await fetch(url + `/events/years/${e.target.value}`)
       .then((r) => r.json())
       .then((events) => {
-        // setEvents(events);
-        // FIXME: temporary solution
         setEvents(events.filter((value) => Object.keys(value).length !== 0));
       })
       .catch((error) => {
