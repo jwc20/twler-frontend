@@ -7,6 +7,7 @@ import Athletes from "../pages/Athletes";
 import Login from "./Login";
 import Signup from "../pages/Signup";
 import EventsPage from "../pages/EventsPage";
+import ResultPage from "../pages/ResultPage";
 
 function App() {
 
@@ -15,11 +16,13 @@ function App() {
       <Nav />
       <Routes>
           <Route index element={<Home />} />
-          <Route path="results" element={<Results />} />
+          {/* <Route path="results" element={<Results />} /> */}
           <Route path="athletes" element={<Athletes />} />
           <Route path="login" element={<Login />} />
           <Route path="signup" element={<Signup />} />
           <Route path="events" element={<EventsPage />} />
+          <Route path="result_page" element={<ResultPage />} />
+          
       </Routes>
     </div>
   );

@@ -69,8 +69,8 @@ function EventsPage() {
       {
         Header: "Location",
         accessor: "location",
-        Filter: SelectColumnFilter, // new
-        filter: "includes", // new
+        Filter: SelectColumnFilter,
+        filter: "includes",
       },
       {
         Header: "Date",
@@ -87,7 +87,7 @@ function EventsPage() {
         setEvents(events.filter((value) => Object.keys(value).length !== 0));
       })
       .catch((error) => {
-        console.log("error");
+        console.log(error);
       });
   }
 
