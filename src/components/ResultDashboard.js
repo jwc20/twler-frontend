@@ -1,6 +1,6 @@
-import ResultExampleGraph from "./ResultExampleGraph";
 import { useEffect, useState } from "react";
 import * as d3 from "d3";
+import TotalsAndBodyweight from "./TotalsAndBodyweight";
 
 const totalAccessor = (d) => d.total;
 const bweightAccessor = (d) => d.bweight;
@@ -8,7 +8,7 @@ const bweightAccessor = (d) => d.bweight;
 const url =
   "http://127.0.0.1:3000/events/years/2021/xxxii-olympic-games/result";
 
-function ResultDashboard() {
+const ResultDashboard = () => {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -21,12 +21,12 @@ function ResultDashboard() {
   }, []);
 
   return (
-    <div className="border-4 border-amber-900	">
+    <div className="ResultDashboard">
       <h2>Result Dashboard</h2>
 
       {loading && <div>Loading...</div>}
       {!loading && (
-        <ResultExampleGraph
+        <TotalsAndBodyweight
           data={data}
           xAccessor={bweightAccessor}
           yAccessor={totalAccessor}
@@ -36,6 +36,6 @@ function ResultDashboard() {
       )}
     </div>
   );
-}
+};
 
 export default ResultDashboard;
