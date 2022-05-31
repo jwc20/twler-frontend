@@ -1,40 +1,18 @@
+import PropTypes from "prop-types";
 import * as d3 from "d3";
-import { useRef } from "react";
-import Chart from "../charts/Chart";
-import Circles from "../charts/Circles";
 
-const Scatterplot = ({ data, xAccessor, yAccessor }) => {
-  const width = d3.min([window.innerWidth * 0.9, window.innerHeight * 0.9]);
-  const svgRef = useRef();
+import Chart from "./Chart";
+import Circles from "./Circles";
+import Axis from "./Axis";
 
-  let dimensions = {
-    width: width,
-    height: width,
-    margin: {
-      top: 10,
-      right: 10,
-      bottom: 50,
-      left: 50,
-    },
-  };
+import { useChartDimensions, accessorPropsType } from "../utils/Utils";
 
-  dimensions.boundedWidth =
-    dimensions.width - dimensions.margin.left - dimensions.margin.right;
-  dimensions.boundedHeight =
-    dimensions.height - dimensions.margin.top - dimensions.margin.bottom;
-
-  const wrapper = d3
-    .select("#wrapper")
-    .append("svg")
-    .attr("width", dimensions.width)
-    .attr("height", dimensions.height);
-
-  const bounds = wrapper
-    .append("g")
-    .style(
-      "transform",
-      `translate(${dimensions.margin.left}px, ${dimensions.margin.top}px)`
-    );
+const ResultTotals = ({ data, xAccessor, yAccessor, xLabel, yLabel }) => {
+  const [ref, dimensions] = useChartDimensions({
+    // width: 600,
+    // height: 500,
+    marginBottom: 100,
+  });
 
   const xScale = d3
     .scaleLinear()
@@ -48,31 +26,46 @@ const Scatterplot = ({ data, xAccessor, yAccessor }) => {
     .range([dimensions.boundedHeight, 0])
     .nice();
 
-  const dots = bounds
-    .selectAll("circle")
-    .data(data)
-    .enter()
-    .append("circle")
-    .attr("cx", (d) => xScale(xAccessor(d)))
-    .attr("cy", (d) => yScale(yAccessor(d)))
-    .attr("r", 5);
-  console.log(dots);
-
-  // const xAccessorScaled = (d) => xScale(xAccessor(d));
-  // const yAccessorScaled = (d) => yScale(yAccessor(d));
-  // const y0AccessorScaled = yScale(yScale.domain()[0]);
+  const xAccessorScaled = (d) => xScale(xAccessor(d));
+  const yAccessorScaled = (d) => yScale(yAccessor(d));
+  const keyAccessor = (d, i) => i;
 
   return (
-    <>
-      <svg className="Scatterplot" ref={svgRef}></svg>
+    <div className="ScatterPlot" ref={ref}>
       <Chart dimensions={dimensions}>
-
-
-
+        <Axis
+          dimensions={dimensions}
+          dimension="x"
+          scale={xScale}
+          label={xLabel}
+        />
+        <Axis
+          dimensions={dimensions}
+          dimension="y"
+          scale={yScale}
+          label={yLabel}
+        />
+        <Circles
+          data={data}
+          keyAccessor={keyAccessor}
+          xAccessor={xAccessorScaled}
+          yAccessor={yAccessorScaled}
+        />
       </Chart>
-      <svg id="wrapper"></svg>
-    </>
+    </div>
   );
 };
 
-export default Scatterplot;
+ResultTotals.propTypes = {
+  xAccessor: accessorPropsType,
+  yAccessor: accessorPropsType,
+  xLabel: PropTypes.string,
+  yLabel: PropTypes.string,
+};
+
+ResultTotals.defaultProps = {
+  xAccessor: (d) => d.x,
+  yAccessor: (d) => d.y,
+};
+
+export default ResultTotals;

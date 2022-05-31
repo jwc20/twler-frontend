@@ -25,7 +25,7 @@ Circles.propTypes = {
 }
 
 Circles.defaultProps = {
-  radius: 5,
+  radius: 2.5,
 }
 
 export default Circles
