@@ -1,6 +1,7 @@
 import PropTypes from "prop-types";
 import * as d3 from "d3";
-// import Chart from "../charts/Chart";
+
+import Scatterplot from "../charts/Scatterplot";
 // import Line from "../charts/Chart";
 
 // import Chart from "./Chart/Chart"
@@ -10,9 +11,9 @@ import * as d3 from "d3";
 import { useChartDimensions, accessorPropsType } from "../utils/Utils";
 
 const ResultTotals = ({ data, xAccessor, yAccessor, xLabel, yLabel }) => {
-  const [ref, dimensions] = useChartDimensions();
+  // const [ref, dimensions] = useChartDimensions();
 
-  console.log(xAccessor, yAccessor, xLabel, yLabel)
+  // console.log(xAccessor, yAccessor, xLabel, yLabel)
 
   // const xScale = d3
   //   .scaleTime()
@@ -30,8 +31,9 @@ const ResultTotals = ({ data, xAccessor, yAccessor, xLabel, yLabel }) => {
   // const y0AccessorScaled = yScale(yScale.domain()[0]);
 
   return (
-    <div className="ResultTotals" ref={ref}>
+    <div className="ResultTotals">
       <h3>Totals and BW</h3>
+      <Scatterplot data={data} xAccessor={xAccessor} yAccessor={yAccessor} />
 
       {/* <Chart dimensions={dimensions}>
         <Line
@@ -40,8 +42,6 @@ const ResultTotals = ({ data, xAccessor, yAccessor, xLabel, yLabel }) => {
           yAccessor={yAccessorScaled}
         />
       </Chart> */}
-
-
     </div>
   );
 };
