@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import * as d3 from "d3";
-import TotalsAndBodyweight from "./TotalsAndBodyweight";
+import ResultTotals from "./ResultTotals";
 
 const totalAccessor = (d) => d.total;
 const bweightAccessor = (d) => d.bweight;
@@ -26,7 +26,7 @@ const ResultDashboard = () => {
 
       {loading && <div>Loading...</div>}
       {!loading && (
-        <TotalsAndBodyweight
+        <ResultTotals
           data={data}
           xAccessor={bweightAccessor}
           yAccessor={totalAccessor}
